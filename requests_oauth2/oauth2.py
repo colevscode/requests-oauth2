@@ -37,7 +37,13 @@ class OAuth2(object):
         Requests an access token
         """
         url = "%s%s" % (self.site, quote(self.token_url))
-        data = {'redirect_uri': self.redirect_uri, 'client_id': self.client_id, 'client_secret': self.client_secret, 'code': code}
+        data = {
+            'redirect_uri': self.redirect_uri, 
+            'client_id': self.client_id, 
+            'client_secret': self.client_secret, 
+            'code': code,
+            'grant_type': 'authorization_code'
+        }
         data.update(kwargs)
         response = requests.post(url, data=data)
 
@@ -61,7 +67,8 @@ class OAuth2(object):
             'redirect_uri': self.redirect_uri, 
             'client_id': self.client_id, 
             'client_secret': self.client_secret, 
-            'refresh_token': refresh_token
+            'refresh_token': refresh_token,
+            'grant_type': 'refresh_token'
         }
         data.update(kwargs)
         response = requests.post(url, data=data)
