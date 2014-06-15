@@ -50,3 +50,28 @@ class OAuth2(object):
             content = response.content
 
         return content
+
+
+    def refresh_token(self, refresh_token, **kwargs):
+        """
+        Requests an access token
+        """
+        url = "%s%s" % (self.site, quote(self.token_url))
+        data = {
+            'redirect_uri': self.redirect_uri, 
+            'client_id': self.client_id, 
+            'client_secret': self.client_secret, 
+            'refresh_token': refresh_token
+        }
+        data.update(kwargs)
+        response = requests.post(url, data=data)
+
+        if isinstance(response.content, basestring):
+            try:
+                content = json.loads(response.content)
+            except ValueError:
+                content = parse_qs(response.content)
+        else:
+            content = response.content
+
+        return content
