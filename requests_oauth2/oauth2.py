@@ -64,7 +64,6 @@ class OAuth2(object):
         """
         url = "%s%s" % (self.site, quote(self.token_url))
         data = {
-            'redirect_uri': self.redirect_uri, 
             'client_id': self.client_id, 
             'client_secret': self.client_secret, 
             'refresh_token': refresh_token,
